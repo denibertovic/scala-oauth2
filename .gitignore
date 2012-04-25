@@ -1,0 +1,14 @@
+.cache
+.classpath
+.project
+.scala_dependencies
+.settings
+target
+.target
+boot
+sbt-launch-*.jar
+*.log
+
+*~
+*.orig
+
