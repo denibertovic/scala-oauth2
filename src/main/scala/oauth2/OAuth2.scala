@@ -3,14 +3,14 @@ package oauth2
 import dispatch._
 import org.joda.time._
 
-class OAuth2(app_id: String, app_secret: String, redirect_uri: String) {
+class OAuth2(appID: String, appSecret: String, redirectUri: String) {
 
   def getcode() : String = {
     //stage 1  - get code
     val url = :/("www.facebook.com", 443).secure / "dialog/oauth"
     val state = DateTime.now.getMillis.toString
-    val params = Map("client_id" -> app_id
-                    ,"redirect_uri" -> redirect_uri
+    val params = Map("client_id" -> appID
+                    ,"redirect_uri" -> redirectUri
                     ,"scope" -> ""
                     ,"state" -> state)
     val ret = (url <<? params to_uri).toString
@@ -22,9 +22,9 @@ class OAuth2(app_id: String, app_secret: String, redirect_uri: String) {
   // stage 2 - get access token
     val hX = new Http
     val url = :/("graph.facebook.com", 443).secure / "oauth/access_token"
-    val params = Map("client_id" -> app_id
-                ,"redirect_uri" -> redirect_uri
-                ,"client_secret" -> app_secret
+    val params = Map("client_id" -> appID
+                ,"redirect_uri" -> redirectUri
+                ,"client_secret" -> appSecret
                 ,"code" -> c)
     val ret = hX(url <<? params as_str).toString
     hX.shutdown()
